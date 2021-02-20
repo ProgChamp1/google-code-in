@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>BookMarks | Fedora Project | Google Code-in</title>
+    <style data-href="./css/app.css">
+      body {
+        font-family: "Open Sans", sans-serif;
+        --background-color: #f5f5f5;
+        --primary-color: #6200ee;
+        background-color: var(--background-color);
+        --translate-normal-pos: translate(1%, 150%);
+        --translate-up: translate(1%, 1%);
+        --text-color: #000;
+        --border-shadow-color: #e3e3e3;
+        --header-text-color: #fff;
+        --button-color: var(--primary-color);
+        color: var(--text-color);
+        -webkit-transition: 0.3s ease-in-out;
+        -o-transition: 0.3s ease-in-out;
+        transition: 0.3s ease-in-out;
+        margin: 0;
+        padding: 0;
+        --label-color: var(--text-color);
+      }
+      body[theme="dark"] {
+        --background-color: #000000;
+        --label-color: #fff;
+        --translate-normal-pos: translate(1%, 150%);
+        --translate-up: translate(1%, 1%);
+        --text-color: #fff;
+        --border-shadow-color: #6d6969;
+        --background-color: #000000;
+        --button-color: #ffffff;
+      }
+      main {
+        margin: auto;
+        text-align: center;
+      }
+      .intro-text {
+        font-size: 1.5rem;
+        font-weight: 700;
+      }
+      .box {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
+      .get-started,
+      .sbm-btn {
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 5px;
+        outline: 0;
+        background-color: #fff;
+        color: var(--primary-color);
+        -webkit-transition: 0.2s ease-in-out;
+        -o-transition: 0.2s ease-in-out;
+        transition: 0.2s ease-in-out;
+        border: 2px solid var(--primary-color);
+      }
+      .get-started:active,
+      .get-started:hover,
+      .sbm-btn:active,
+      .sbm-btn:hover {
+        background-color: #e3e3e3;
+        -webkit-transform: scale(1.02);
+        -ms-transform: scale(1.02);
+        transform: scale(1.02);
+      }
+      .img-skeleton {
+        height: 200px;
+        width: 200px;
+        margin: auto;
+        background-color: #e3e3e3;
+        margin-top: 30px;
+        border-radius: 20px;
+        -webkit-animation: blink 1.3s ease-out infinite;
+        animation: blink 1.3s ease-out infinite;
+      }
+      @-webkit-keyframes blink {
+        from {
+          background-color: #f5f5f5;
+        }
+        top {
+          background-color: #e3e3e3;
+        }
+      }
+      @keyframes blink {
+        from {
+          background-color: #f5f5f5;
+        }
+        top {
+          background-color: #e3e3e3;
+        }
+      }
+      .box-bookmarks {
+        border: 2px solid #e3e3e3;
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+        border-radius: 15px;
+      }
+      ._animate,
+      .paper-input {
+        margin: auto;
+        text-align: left;
+      }
+      ._animate {
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        padding-left: 4px;
+        padding-right: 4px;
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        width: auto;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transform: var(--translate-normal-pos);
+        -ms-transform: var(--translate-normal-pos);
+        transform: var(--translate-normal-pos);
+        width: auto;
+        pointer-events: none;
+        color: var(--label-color);
+      }
+      ._animate.error {
+        color: red !important;
+      }
+      ._animate.moveup {
+        font-size: calc(1em - 2px);
+        -webkit-animation: moveUp linear 0.1s;
+        animation: moveUp linear 0.1s;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+        color: var(--primary-color);
+      }
+      ._animate.movedown {
+        -webkit-animation: moveDown linear 0.1s;
+        animation: moveDown linear 0.1s;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        -webkit-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+      }
+      @-webkit-keyframes moveUp {
+        0% {
+          -webkit-transform: var(--translate-normal-pos);
+          transform: var(--translate-normal-pos);
+        }
+        100% {
+          -webkit-transform: var(--translate-up);
+          transform: var(--translate-up);
+        }
+      }
+      @keyframes moveUp {
+        0% {
+          -webkit-transform: var(--translate-normal-pos);
+          transform: var(--translate-normal-pos);
+        }
+        100% {
+          -webkit-transform: var(--translate-up);
+          transform: var(--translate-up);
+        }
+      }
+      @-webkit-keyframes moveDown {
+        0% {
+          -webkit-transform: var(--translate-up);
+          transform: var(--translate-up);
+        }
+        100% {
+          -webkit-transform: var(--translate-normal-pos);
+          transform: var(--translate-normal-pos);
+        }
+      }
+      @keyframes moveDown {
+        0% {
+          -webkit-transform: var(--translate-up);
+          transform: var(--translate-up);
+        }
+        100% {
+          -webkit-transform: var(--translate-normal-pos);
+          transform: var(--translate-normal-pos);
+        }
+      }
+      .search-component {
+        margin: auto;
+      }
+      .paper-input {
+        display: block;
+        width: 50%;
+        background-color: var(--background-color);
+        -webkit-box-shadow: 2px 2px 2px var(--border-shadow-color);
+        box-shadow: 2px 2px 2px var(--border-shadow-color);
+        border: 2px solid var(--border-shadow-color);
+        padding: 5px;
+        outline: 0;
+        height: 30px;
+        border-radius: 4px;
+        -webkit-transition: 0.1s cubic-bezier(0.46, 1, 0.74, 1.07);
+        -o-transition: 0.1s cubic-bezier(0.46, 1, 0.74, 1.07);
+        transition: 0.1s cubic-bezier(0.46, 1, 0.74, 1.07);
+        color: var(--text-color);
+      }
+      .paper-input:active,
+      .paper-input:focus,
+      .paper-input:hover {
+        -webkit-box-shadow: 2px 2px 2px #999;
+        box-shadow: 2px 2px 2px #999;
+      }
+      .paper-input:active,
+      .paper-input:focus {
+        border: 2px solid var(--primary-color);
+      }
+      .search-button {
+        padding: 8px;
+        margin-top: 5px;
+        background-color: var(--background-color);
+        border: 2px solid var(--border-shadow-color);
+        color: var(--button-color);
+        outline: 0;
+        cursor: pointer;
+      }
+      .search-button:hover {
+        opacity: 0.5;
+      }
+      .ybm {
+        font-weight: 700;
+        font-size: 1.5rem;
+        text-align: left;
+      }
+      .bookmark-arr {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+      }
+      .bookmarked-element {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: left;
+        -ms-flex-pack: left;
+        justify-content: left;
+        padding: 10px;
+        border: 1px solid var(--border-shadow-color);
+        margin-top: 5px;
+        border-radius: 10px;
+      }
+      .unstyled-link {
+        color: var(--text-color);
+        text-decoration: none;
+        margin-left: 5px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+      }
+      .close-button {
+        margin-left: auto;
+        border: none;
+        outline: 0;
+        border-radius: 50%;
+        background: var(--header-text-color);
+        font-weight: 700;
+        color: var(--primary-color);
+        cursor: pointer;
+      }
+      .bold {
+        font-weight: 700;
+      }
+      .light {
+        font-weight: lighter;
+      }
+    </style>
+    <meta
+      name="img-NO_SRC"
+      content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMTIgMkM2LjQ4IDIgMiA2LjQ4IDIgMTJzNC40OCAxMCAxMCAxMCAxMC00LjQ4IDEwLTEwUzE3LjUyIDIgMTIgMnptMCAxOGMtNC40MiAwLTgtMy41OC04LThzMy41OC04IDgtOCA4IDMuNTggOCA4LTMuNTggOC04IDh6Ii8+PHBhdGggZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjwvc3ZnPg=="
+    />
+    <meta
+      name="img-SAFE_PROTO_IMG"
+      content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0Ij48ZyBmaWxsPSJub25lIiBzdHlsZT0iJiMxMDsiPjxwYXRoIGQ9Ik0wIDBoMjR2MjRIMFYweiIvPjxwYXRoIG9wYWNpdHk9Ii44NyIgZD0iTTAgMGgyNHYyNEgwVjB6Ii8+PC9nPjxwYXRoIGQ9Ik0xOCA4aC0xVjZjMC0yLjc2LTIuMjQtNS01LTVTNyAzLjI0IDcgNnYySDZjLTEuMSAwLTIgLjktMiAydjEwYzAgMS4xLjkgMiAyIDJoMTJjMS4xIDAgMi0uOSAyLTJWMTBjMC0xLjEtLjktMi0yLTJ6bS02IDljLTEuMSAwLTItLjktMi0ycy45LTIgMi0yIDIgLjkgMiAyLS45IDItMiAyek05IDhWNmMwLTEuNjYgMS4zNC0zIDMtM3MzIDEuMzQgMyAzdjJIOXoiIGZpbGw9IiMwMEI1MDAiLz48L3N2Zz4="
+    />
+    <meta
+      name="img-UNSAFE_IMG"
+      content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyOSIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDBWMHoiLz48cGF0aCBkPSJNMTIgMTNjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0yem02LTVoLTFWNmMwLTIuNzYtMi4yNC01LTUtNS0yLjI4IDAtNC4yNyAxLjU0LTQuODQgMy43NS0uMTQuNTQuMTggMS4wOC43MiAxLjIyLjUzLjE0IDEuMDgtLjE4IDEuMjItLjcyQzkuNDQgMy45MyAxMC42MyAzIDEyIDNjMS42NSAwIDMgMS4zNSAzIDN2Mkg2Yy0xLjEgMC0yIC45LTIgMnYxMGMwIDEuMS45IDIgMiAyaDEyYzEuMSAwIDItLjkgMi0yVjEwYzAtMS4xLS45LTItMi0yem0wIDExYzAgLjU1LS40NSAxLTEgMUg3Yy0uNTUgMC0xLS40NS0xLTF2LThjMC0uNTUuNDUtMSAxLTFoMTBjLjU1IDAgMSAuNDUgMSAxdjh6Ii8+PC9zdmc+"
+    />
+    <meta
+      name="img-0-svg"
+      content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMFYweiIvPjxwYXRoIGQ9Ik0xNyAzSDdjLTEuMSAwLTIgLjktMiAydjE2bDctMyA3IDNWNWMwLTEuMS0uOS0yLTItMnptMCAxNWwtNS0yLjE4TDcgMThWNWgxMHYxM3oiLz48L3N2Zz4="
+    />
+    <meta
+      name="img-1-svg"
+      content="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMFYweiIvPjxwYXRoIG9wYWNpdHk9Ii4zIiBkPSJNNyAxNy45N2w1LTIuMTUgNSAyLjE1VjVIN3oiLz48cGF0aCBkPSJNMTcgM0g3Yy0xLjEgMC0yIC45LTIgMnYxNmw3LTMgNyAzVjVjMC0xLjEtLjktMi0yLTJ6bTAgMTQuOTdsLTUtMi4xNC01IDIuMTRWNWgxMHYxMi45N3oiLz48L3N2Zz4="
+    />
+    <link
+      rel="preload"
+      href="https://fonts.pycode.tk/open-sans.css"
+      onload="this.rel='stylesheet'"
+      as="style"
+    />
+    <script>
+      window.pathname = location.pathname;
+    </script>
+    <link rel="modulepreload" href="./js/@ui/ui-lib.modern.js" />
+    <link rel="modulepreload" href="./js/components/onboarding.js" />
+    <link rel="modulepreload" href="./js/components/img.js" />
+    <link rel="modulepreload" href="./js/components/bookmarksapp.js" />
+    <link rel="modulepreload" href="./js/components/animated_input.js" />
+    <link rel="modulepreload" href="./js/util.js" />
+    <link rel="modulepreload" href="./js/storage-manager.js" />
+  </head>
+  <body>
+    <main class="app"></main>
+    <script type="module" src="./js/app.js"></script>
+    <script nomodule>
+      document.querySelector("main").textContent =
+        "Your Browser Does not Support ESModules.";
+    </script>
+  </body>
+</html>
